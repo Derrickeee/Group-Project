@@ -139,14 +139,47 @@ void knowledge_reset() {
 }
 
 
+typedef struct node {
+	char entity[MAX_ENTITY];
+	char response[MAX_RESPONSE];
+	struct node *next;
+} NODE;
+
+typedef NODE * ptr;
+
+ptr what_head = NULL;
+ptr where_head = NULL;
+ptr who_head = NULL;
+
 /*
  * Write the knowledge base to a file.
  *
  * Input:
  *   f - the file
  */
-void knowledge_write(FILE *f) {
+void knowledge_write(FILE *f){
 
-	/* to be implemented */
-    //export ini file
+    // Write what linked list into the file
+	ptr pointer = what_head;
+    fprintf(f, "[WHAT]\n");
+    while(pointer != NULL) {
+        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
+        pointer = pointer->next;
+    }
+
+	// Write where linked list into the file
+	pointer = where_head;
+	fprintf(f, "\n[WHERE]\n");
+    while(pointer != NULL) {
+        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
+        pointer = pointer->next;
+    }
+
+	// Write who linked list into the file
+	pointer = who_head;
+	fprintf(f, "\n[WHO]\n");
+    while(pointer != NULL) {
+        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
+        pointer = pointer->next;
+    }
 }
