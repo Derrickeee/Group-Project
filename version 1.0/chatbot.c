@@ -433,12 +433,23 @@ int chatbot_is_smalltalk(const char *intent) {
 
 	/* to be implemented */
 	
-		return compare_token("Hello", intent) == 0 ||
-			compare_token("It's", intent) == 0 || 
-			compare_token("Good", intent) == 0 ||
-			compare_token("Goodbye", intent) == 0 ||
-			compare_token("Tell", intent) == 0;
-
+// implementation of smalltalk with Profanity Warning
+  /* Store the intent from user into an array of pointers*/
+	const char *smalltalk[] = {
+	            "good", "hello", "hey", "hi", "it", "its", "it's","wassup","sup","yo","fuck","fucking","fucked", "shit", "shitting", "crap", "kanina"
+  };
+  
+	/*Declare length of array*/
+  size_t length = sizeof(smalltalk)/sizeof(smalltalk[0]);
+	
+  /*Create a loop to loop through the array to compare each intent whether 
+	is it in smalltalk[]. If yes, return 1*/
+	for (int i = 0; i < length; i++) {
+		if (compare_token(intent, smalltalk[i]) == 0) {
+			return 1;
+		}
+	}
+  
 	return 0;
 
 }
@@ -457,17 +468,37 @@ int chatbot_is_smalltalk(const char *intent) {
 int chatbot_do_smalltalk(int inc, char *inv[], char *response, int n) {
 
 	/* to be implemented */
-	if (compare_token("Hello", inv[0]) == 0){
-			snprintf(response, n, "Hello");
-		} else if (compare_token("It's", inv[0]) == 0) {
-			snprintf(response, n, "Indeed it is");
-		} else if (compare_token("Good", inv[0]) == 0) {
-			snprintf(response, n, "Good %s", inv[1]);
-		} else if (compare_token("Goodbye", inv[0]) == 0) {
-			snprintf(response, n, "Goodbye");
-			return 1;
-		}
+/* Create an array of pointers to store all responses to smalltalk */
+	const char *random_hi[] = {"Hi!", "Hello!", "Hello there!", "Hey hey~", "What's Up!!"};
+	
+  /* random number generator */
+	int rand_int = (int)(rand() % 5);
 
+	if (compare_token("good", inv[0]) == 0) {
+		/* Check if the user specify "good" as the first word */
+		if (inc > 1) {
+      /* If the user specifies something else after "good", the chatbot will copy the word
+			after "good" and respond with it */
+			snprintf(response, n, "Good %s to you too, %s!", inv[1], getenv("USERNAME"));
+		} else {
+      /* If the user only specifies "good", the chatbot will respond with "Good day!" */
+			snprintf(response, n, "Good day!");
+		}
+    
+	} else if (compare_token("hello", inv[0]) == 0 || compare_token("hey", inv[0]) == 0 || compare_token("hi", inv[0]) == 0) {
+		/* If the user's first word is any of the above, the bot will randomly generate a number
+		and retrieve the respond from random_hi array */
+		snprintf(response, n, "%s %s", random_hi[rand_int], getenv("USERNAME"));
+    
+	} else if (compare_token("it", inv[0]) == 0 || compare_token("its", inv[0]) == 0 || compare_token("it's", inv[0]) == 0) {
+		/* If the user first word is any of the above, the bot will respond with "Indeed it is." */
+		snprintf(response, n, "Indeed it is.");
+    
+	} else if (compare_token("fuck", inv[0]) == 0 || compare_token("fucking", inv[0]) == 0 || compare_token("fucked", inv[0]) == 0 || compare_token("shit", inv[0]) == 0 || compare_token("shitting", inv[0]) == 0 || compare_token("crap", inv[0]) == 0 || compare_token("kanina", inv[0]) == 0 ) {
+    // Profanity warning from the bot
+    snprintf(response, n, "That's not a very nice thing to say!");
+	}
+  
 	return 0;
 
 }
