@@ -138,48 +138,35 @@ void knowledge_reset() {
     fclose(data);
 }
 
-
-typedef struct node {
-	char entity[MAX_ENTITY];
-	char response[MAX_RESPONSE];
-	struct node *next;
-} NODE;
-
-typedef NODE * ptr;
-
-ptr what_head = NULL;
-ptr where_head = NULL;
-ptr who_head = NULL;
-
 /*
  * Write the knowledge base to a file.
  *
  * Input:
  *   f - the file
  */
-void knowledge_write(FILE *f){
+void knowledge_write(FILE *f) {
+    NODE *ptr_what = head_what,
+        *ptr_where = head_where,
+        *ptr_who = head_who;
 
-    // Writes 'what' linked list into the file
-	ptr pointer = what_head;
-    fprintf(f, "[WHAT]\n");
-    while(pointer != NULL) {
-        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
-        pointer = pointer->next;
+    fprintf(f, "[what]\n");
+    while (ptr_what != NULL) {
+        fprintf(f, "%s=%s\n", ptr_what->entity, ptr_what->response);
+        ptr_what = ptr_what->next;
     }
+    fprintf(f, "\n");
 
-	// Writes 'where' linked list into the file
-	pointer = where_head;
-	fprintf(f, "\n[WHERE]\n");
-    while(pointer != NULL) {
-        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
-        pointer = pointer->next;
+    fprintf(f, "[where]\n");
+    while (ptr_where != NULL) {
+        fprintf(f, "%s=%s\n", ptr_where->entity, ptr_where->response);
+        ptr_where = ptr_where->next;
     }
+    fprintf(f, "\n");
 
-	// Writes 'who' linked list into the file
-	pointer = who_head;
-	fprintf(f, "\n[WHO]\n");
-    while(pointer != NULL) {
-        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
-        pointer = pointer->next;
+    fprintf(f, "[who]\n");
+    while (ptr_who != NULL) {
+        fprintf(f, "%s=%s\n", ptr_who->entity, ptr_who->response);
+        ptr_who = ptr_who->next;
     }
+    fprintf(f, "\n");
 }
