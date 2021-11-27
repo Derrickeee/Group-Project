@@ -101,7 +101,7 @@ int knowledge_read(const char *filename) {
                 ini_gets(section, key, 0, response, sizeof(response), filename);
                 //add response to data.ini
                 success = ini_puts(section, key, response, "data.ini");
-                //if successful add pairs
+                //if successful, add pairs
                 if (success == 1){
                     pairs++;
                 }
@@ -159,7 +159,7 @@ ptr who_head = NULL;
  */
 void knowledge_write(FILE *f){
 
-    // Write what linked list into the file
+    // Writes 'what' linked list into the file
 	ptr pointer = what_head;
     fprintf(f, "[WHAT]\n");
     while(pointer != NULL) {
@@ -167,7 +167,7 @@ void knowledge_write(FILE *f){
         pointer = pointer->next;
     }
 
-	// Write where linked list into the file
+	// Writes 'where' linked list into the file
 	pointer = where_head;
 	fprintf(f, "\n[WHERE]\n");
     while(pointer != NULL) {
@@ -175,7 +175,7 @@ void knowledge_write(FILE *f){
         pointer = pointer->next;
     }
 
-	// Write who linked list into the file
+	// Writes 'who' linked list into the file
 	pointer = who_head;
 	fprintf(f, "\n[WHO]\n");
     while(pointer != NULL) {
