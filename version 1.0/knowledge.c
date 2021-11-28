@@ -139,23 +139,47 @@ void knowledge_reset() {
     fclose(data);
 }
 
+typedef struct node {
+	char entity[MAX_ENTITY];
+	char response[MAX_RESPONSE];
+	struct node *next;
+} NODE;
+
+typedef NODE * ptr;
+
+ptr what_head = NULL;
+ptr where_head = NULL;
+ptr who_head = NULL;
+
 /*
  * Write the knowledge base to a file.
  *
  * Input:
  *   f - the file
  */
-// 
-static void knowledge_write (const char *intent, const char *entity, const char *response)
-{
-  if (intent != NULL && _tcslen(intent) > 0) {
-    TCHAR *f;
-    "data.ini"[0] = '[';
-    ini_strncpy("data.ini" + 1, intent, INI_BUFFERSIZE - 4, f);  /* -1 for '[', -1 for ']', -2 for '\r\n' */
-    f = _tcschr("data.ini", '\0');
-    assert(f != NULL);
-    *f++ = ']';
-    if (f != NULL)
-      (void)ini_write("data.ini", f);
-  }
+void knowledge_write(FILE *f){
+
+    // Write what linked list into the file
+	ptr pointer = what_head;
+    fprintf(f, "[WHAT]\n");
+    while(pointer != NULL) {
+        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
+        pointer = pointer->next;
+    }
+
+	// Write where linked list into the file
+	pointer = where_head;
+	fprintf(f, "\n[WHERE]\n");
+    while(pointer != NULL) {
+        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
+        pointer = pointer->next;
+    }
+
+	// Write who linked list into the file
+	pointer = who_head;
+	fprintf(f, "\n[WHO]\n");
+    while(pointer != NULL) {
+        fprintf(f,"%s=%s\n", pointer->entity, pointer->response);
+        pointer = pointer->next;
+    }
 }

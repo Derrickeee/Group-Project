@@ -22,17 +22,6 @@
 /* the maximum number of characters allowed in a response (including the terminating null) */
 #define MAX_RESPONSE 256
 
-//create link-listed node
-typedef struct node{
-  char intent[MAX_INTENT]; // insert who, what, where
-  char entity[MAX_ENTITY]; // rest of the question
-  char response[MAX_RESPONSE]; // response to the question
-  struct node *next; // putting it into a list
-} NODE;
-
-extern NODE *head_what, *head_who, *head_where; // head of the list
-NODE *pointer; 
-
 /* return codes for knowledge_get() and knowledge_put() */
 #define KB_OK        0
 #define KB_NOTFOUND -1
@@ -67,6 +56,6 @@ int knowledge_get(const char *intent, const char *entity, char *response, int n)
 int knowledge_put(const char *intent, const char *entity, const char *response);
 void knowledge_reset();
 int knowledge_read(const char *filename);
-static void knowledge_write(const char *intent, const char *entity, const char *response);
+void knowledge_write(FILE *f);
 
 #endif
