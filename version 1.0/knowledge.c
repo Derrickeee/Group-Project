@@ -18,6 +18,9 @@
 #include "chat1002.h"
 #include "minIni.h"
 
+ptr what_head = NULL;
+ptr where_head = NULL;
+ptr who_head = NULL;
 
 /*
  * Get the response to a question.
@@ -144,29 +147,17 @@ void knowledge_reset() {
  * Input:
  *   f - the file
  */
-void knowledge_write(FILE *f) {
-    NODE *ptr_what = head_what,
-        *ptr_where = head_where,
-        *ptr_who = head_who;
-
-    fprintf(f, "[what]\n");
-    while (ptr_what != NULL) {
-        fprintf(f, "%s=%s\n", ptr_what->entity, ptr_what->response);
-        ptr_what = ptr_what->next;
-    }
-    fprintf(f, "\n");
-
-    fprintf(f, "[where]\n");
-    while (ptr_where != NULL) {
-        fprintf(f, "%s=%s\n", ptr_where->entity, ptr_where->response);
-        ptr_where = ptr_where->next;
-    }
-    fprintf(f, "\n");
-
-    fprintf(f, "[who]\n");
-    while (ptr_who != NULL) {
-        fprintf(f, "%s=%s\n", ptr_who->entity, ptr_who->response);
-        ptr_who = ptr_who->next;
-    }
-    fprintf(f, "\n");
+// 
+static void knowledge_write (const char *intent, const char *entity, const char *response)
+{
+  if (intent != NULL && _tcslen(intent) > 0) {
+    TCHAR *f;
+    "data.ini"[0] = '[';
+    ini_strncpy("data.ini" + 1, intent, INI_BUFFERSIZE - 4, f);  /* -1 for '[', -1 for ']', -2 for '\r\n' */
+    f = _tcschr("data.ini", '\0');
+    assert(f != NULL);
+    *f++ = ']';
+    if (f != NULL)
+      (void)ini_write("data.ini", f);
+  }
 }
