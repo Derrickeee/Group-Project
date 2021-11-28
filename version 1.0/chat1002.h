@@ -60,11 +60,13 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n);
 int chatbot_is_smalltalk(const char *intent);
 int chatbot_do_smalltalk(int inc, char *inv[], char *resonse, int n);
 
+
+
 /* functions defined in knowledge.c */
 int knowledge_get(const char *intent, const char *entity, char *response, int n);
 int knowledge_put(const char *intent, const char *entity, const char *response);
 void knowledge_reset();
 int knowledge_read(const char *filename);
-void knowledge_write(FILE *f);
+static void knowledge_write(const char *intent, const char *entity, const char *response);
 
 #endif
