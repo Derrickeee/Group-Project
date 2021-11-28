@@ -18,9 +18,7 @@
 #include "chat1002.h"
 #include "minIni.h"
 
-ptr what_head = NULL;
-ptr where_head = NULL;
-ptr who_head = NULL;
+
 
 /*
  * Get the response to a question.
