@@ -478,7 +478,7 @@ int chatbot_do_smalltalk(int inc, char *inv[], char *response, int n) {
 		if (inc > 1) {
       /* If the user specifies something else after "good", the chatbot will copy the word
 			after "good" and respond with it */
-			snprintf(response, n, "Good %s to you too, %s!", inv[1], getenv("USERNAME"));
+			snprintf(response, n, "Good %s to you too, %s!", inv[1], "Kitty");
 		} else {
       /* If the user only specifies "good", the chatbot will respond with "Good day!" */
 			snprintf(response, n, "Good day!");
@@ -487,7 +487,7 @@ int chatbot_do_smalltalk(int inc, char *inv[], char *response, int n) {
 	} else if (compare_token("hello", inv[0]) == 0 || compare_token("hey", inv[0]) == 0 || compare_token("hi", inv[0]) == 0) {
 		/* If the user's first word is any of the above, the bot will randomly generate a number
 		and retrieve the respond from random_hi array */
-		snprintf(response, n, "%s %s", random_hi[rand_int], getenv("USERNAME"));
+		snprintf(response, n, "%s %s", random_hi[rand_int], "Kitty");
     
 	} else if (compare_token("it", inv[0]) == 0 || compare_token("its", inv[0]) == 0 || compare_token("it's", inv[0]) == 0) {
 		/* If the user first word is any of the above, the bot will respond with "Indeed it is." */
