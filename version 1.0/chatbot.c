@@ -471,8 +471,7 @@ int chatbot_do_smalltalk(int inc, char *inv[], char *response, int n) {
 /* Create an array of pointers to store all responses to smalltalk */
 	const char *random_hi[] = {"Hi!", "Hello!", "Hello there!", "Hey hey~", "What's Up!!"};
 	
-  /* random number generator */
-	int rand_int = (int)(rand() % 5);
+
 
 	if (compare_token("good", inv[0]) == 0) {
 		/* Check if the user specify "good" as the first word */
