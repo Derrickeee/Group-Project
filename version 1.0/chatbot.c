@@ -430,19 +430,17 @@ int chatbot_do_save(int inc, char *inv[], char *response, int n) {
  *  0, otherwise
  */
 int chatbot_is_smalltalk(const char *intent) {
-
-	/* to be implemented */
 	
-// implementation of smalltalk with Profanity Warning
-  /* Store the intent from user into an array of pointers*/
+    // implementation of smalltalk with Profanity Warning
+    /* Store the intent from user into an array of pointers*/
 	const char *smalltalk[] = {
 	            "good", "hello", "hey", "hi", "it", "its", "it's","wassup","sup","yo","fuck","fucking","fucked", "shit", "shitting", "crap", "kanina"
-  };
+    };
   
 	/*Declare length of array*/
-  size_t length = sizeof(smalltalk)/sizeof(smalltalk[0]);
+    size_t length = sizeof(smalltalk)/sizeof(smalltalk[0]);
 	
-  /*Create a loop to loop through the array to compare each intent whether 
+    /*Create a loop to loop through the array to compare each intent whether 
 	is it in smalltalk[]. If yes, return 1*/
 	for (int i = 0; i < length; i++) {
 		if (compare_token(intent, smalltalk[i]) == 0) {
@@ -471,14 +469,15 @@ int chatbot_do_smalltalk(int inc, char *inv[], char *response, int n) {
 /* Create an array of pointers to store all responses to smalltalk */
 	const char *random_hi[] = {"Hi!", "Hello!", "Hello there!", "Hey hey~", "What's Up!!"};
 	
-
+  /* random number generator */
+	int rand_int = (int)(rand() % 5);
 
 	if (compare_token("good", inv[0]) == 0) {
 		/* Check if the user specify "good" as the first word */
 		if (inc > 1) {
       /* If the user specifies something else after "good", the chatbot will copy the word
 			after "good" and respond with it */
-			snprintf(response, n, "Good %s to you too, Kitty!", inv[1]);
+			snprintf(response, n, "Good %s to you too, %s!", inv[1], chatbot_username());
 		} else {
       /* If the user only specifies "good", the chatbot will respond with "Good day!" */
 			snprintf(response, n, "Good day!");
@@ -487,7 +486,7 @@ int chatbot_do_smalltalk(int inc, char *inv[], char *response, int n) {
 	} else if (compare_token("hello", inv[0]) == 0 || compare_token("hey", inv[0]) == 0 || compare_token("hi", inv[0]) == 0) {
 		/* If the user's first word is any of the above, the bot will randomly generate a number
 		and retrieve the respond from random_hi array */
-		snprintf(response, n, "%s Kitty", random_hi[rand_int]);
+		snprintf(response, n, "%s %s", random_hi[rand_int], chatbot_username());
     
 	} else if (compare_token("it", inv[0]) == 0 || compare_token("its", inv[0]) == 0 || compare_token("it's", inv[0]) == 0) {
 		/* If the user first word is any of the above, the bot will respond with "Indeed it is." */
